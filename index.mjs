@@ -1,17 +1,19 @@
 import { Bot } from "grammy";
 import http from 'node:http';
 
+// 1. Servidor HTTP en 0.0.0.0 para que Render detecte el puerto activo
 const port = process.env.PORT || 3000;
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end('Bot is running!');
-}).listen(port, () => {
+}).listen(port, '0.0.0.0', () => {
   console.log(`Server listening on port ${port}`);
 });
 
+// 2. Inicialización del Bot
 const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
 
-// Map is used for simplicity. For production use a database
+// Map para almacenar usuarios pagados (usar base de datos en producción)
 const paidUsers = new Map();
 
 bot.command("start", (ctx) =>
