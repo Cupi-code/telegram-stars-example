@@ -1,4 +1,13 @@
 import { Bot } from "grammy";
+import http from 'node:http';
+
+const port = process.env.PORT || 3000;
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot is running!');
+}).listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 
 const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
 
